@@ -55,3 +55,4 @@ class FeasibleSolutionSearcher:
                 D.add_edge(self.airline.routes[i][j],self.airline.routes[i][j+1])
         return D
         
+        
