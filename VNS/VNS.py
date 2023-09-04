@@ -1,10 +1,14 @@
 #import evaluator
 
 class VNS:
-    def __init__(self, initial_solution, neighborhood_func):
-        self.current_solution = initial_solution
-        self.neighborhood_func = neighborhood_func
-        self.objective_value = evaluator(self.current_solution)
+    def __init__(self, airline):
+        self.airline = airline
+        self.feasibleSolutionSearcher = FeasibleSolutionSearcher(airline)
+        self.evaluator = Evaluator(airline)
+        self.neighborhood = Neighborhood(airline.flights)
+        self.current_solution = self.feasibleSolutionSearcher.search()
+        self.neighborhood_func = self.neighborhood.neighborhood
+        self.objective_value = self.evaluator.evaluate(self.current_solution)
         
     def search(self,N):
         k = 1
@@ -12,7 +16,7 @@ class VNS:
             neighbors = self.neighborhood_func(self.current_solution,10)
             neighbor = random.choice(neighbors)
             if (neighbor != None):
-                obj = evaluator(neighbor)
+                obj = self.evaluator.evaluate(neighbor)
             else:
                 obj = 0
             if (self.objective_value >= obj):
