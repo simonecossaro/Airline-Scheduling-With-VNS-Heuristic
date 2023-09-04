@@ -53,7 +53,7 @@ class Evaluator:
         H = np.zeros(len(itineraries_selected))
         remain = list()
         for f in flights_selected:
-            remain.append(aut.get_number_seats(self.airline.flights[self.airline.flights.nid ==f].iloc[0,13]))
+            remain.append(get_number_seats(self.airline.flights[self.airline.flights.nid ==f].iloc[0,13]))
         #step1
         for i in range(len(direct_it_ord)):
             flow = min(di[int(direct_it_ord.iloc[i,0])],remain[flight_index_ev_dict[self.airline.FI[itineraries_selected[int(direct_it_ord.iloc[i,0])]][0]]])
@@ -63,8 +63,8 @@ class Evaluator:
         for i in range(len(onestop_it_ord)):
             f1 = self.airline.FI[itineraries_selected[int(onestop_it_ord.iloc[i,0])]][0]
             f2 = self.airline.FI[itineraries_selected[int(onestop_it_ord.iloc[i,0])]][1]
-            i1 = itinerary_index_ev_dict[flight_to_direct_itinerary(f1,itineraries_selected)]
-            i2 = itinerary_index_ev_dict[flight_to_direct_itinerary(f2,itineraries_selected)]
+            i1 = itinerary_index_ev_dict[self.flight_to_direct_itinerary(f1,itineraries_selected)]
+            i2 = itinerary_index_ev_dict[self.flight_to_direct_itinerary(f2,itineraries_selected)]
             farei = fare[int(onestop_it_ord.iloc[i,0])]
             if (i1!= None and i2!=None):
                 fare1 = fare[i1]
@@ -96,15 +96,15 @@ class Evaluator:
         #step3
         onestop_it_maxfareij = pd.DataFrame(columns=['n_osit','max_fare_os','j_max_os'])
         for i in range(len(onestop_it)):
-            max_fare, j_max = calc_max_fare_ij(onestop_it.iloc[i,0],itineraries_selected,fare,b)
+            max_fare, j_max = self.calc_max_fare_ij(onestop_it.iloc[i,0],itineraries_selected,fare,b)
             onestop_it_maxfareij.loc[i] = [onestop_it.iloc[i,0],max_fare,j_max]
         onestop_it_maxfareij_ord = onestop_it_maxfareij.sort_values('max_fare_os',ascending=False)
         for i in range(len(onestop_it_maxfareij_ord)):
             if (onestop_it_maxfareij_ord.iloc[i,1] > 0):
                 fj = self.airline.FI[itineraries_selected[int(onestop_it_ord.iloc[i,0])]][0]
                 fk = self.airline.FI[itineraries_selected[int(onestop_it_ord.iloc[i,0])]][1]
-                j = flight_to_direct_itinerary(fj,itineraries_selected)
-                k = flight_to_direct_itinerary(fk,itineraries_selected)
+                j = self.flight_to_direct_itinerary(fj,itineraries_selected)
+                k = self.flight_to_direct_itinerary(fk,itineraries_selected)
                 flow = min(remain[flight_index_ev_dict[fj]]+H[j], remain[flight_index_ev_dict[fk]]+H[k], di[int(onestop_it_ord.iloc[i,2])])
                 H[int(onestop_it_ord.iloc[i,2])] += flow
                 H[int(onestop_it_ord.iloc[i,0])] -= flow
@@ -113,11 +113,11 @@ class Evaluator:
         #step4
         direct_it_maxfareij = pd.DataFrame(columns=['n_dit','max_fare_d','j_max_d'])
         for i in range(len(direct_it)):
-            max_fare, j_max = calc_max_fare_ij(direct_it.iloc[i,0],itineraries_selected,fare,b)
+            max_fare, j_max = self.calc_max_fare_ij(direct_it.iloc[i,0],itineraries_selected,fare,b)
             direct_it_maxfareij.loc[i] = [direct_it.iloc[i,0],max_fare,j_max]
         direct_it_maxfareij_ord = direct_it_maxfareij.sort_values('max_fare_d',ascending=False)
         for i in range(len(direct_it_maxfareij_ord)):
-            if (direct_it_maxfare_ij_ord.iloc[i,1] > 0):
+            if (direct_it_maxfareij_ord.iloc[i,1] > 0):
                 fj = self.airline.FI[itineraries_selected[int(direct_it_ord.iloc[i,0])]][0]
                 fk = self.airline.FI[itineraries_selected[int(direct_it_ord.iloc[i,0])]][1]
                 j = flight_to_direct_itinerary(fj,itineraries_selected)
@@ -138,7 +138,7 @@ class Evaluator:
                 self.airline.itineraries[i][1] == flight_dest and (i in itineraries)):
                 return i
         
-    def calc_max_fare_ij(itinerary,itineraries,fare,b):
+    def calc_max_fare_ij(self,itinerary,itineraries,fare,b):
         max_fare = 0
         j_max = 0
         for j in range(len(itineraries)):
