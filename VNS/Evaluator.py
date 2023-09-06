@@ -1,5 +1,7 @@
 import pandas as pd
 import AircraftsUtilities as aut
+import gurobipy as gb
+import numpy as np
 
 class Evaluator:
     def __init__(self,airline):
@@ -53,7 +55,7 @@ class Evaluator:
         H = np.zeros(len(itineraries_selected))
         remain = list()
         for f in flights_selected:
-            remain.append(get_number_seats(self.airline.flights[self.airline.flights.nid ==f].iloc[0,13]))
+            remain.append(aut.get_number_seats(self.airline.flights[self.airline.flights.nid ==f].iloc[0,13]))
         #step1
         for i in range(len(direct_it_ord)):
             flow = min(di[int(direct_it_ord.iloc[i,0])],remain[flight_index_ev_dict[self.airline.FI[itineraries_selected[int(direct_it_ord.iloc[i,0])]][0]]])

@@ -1,3 +1,5 @@
+import random
+
 class Neighborhood:
     def __init__(self,flights):
         self.flights = flights

@@ -2,7 +2,7 @@ import pandas as pd
 import random 
 import networkx as nx
 import numpy as np
-import AircraftUtilities as aut
+import AircraftsUtilities as aut
 
 flights = pd.read_csv('flight_schedules.csv').iloc[:,1:]
 aircraft_types = flights['aircraft_type'].unique()
