@@ -1,6 +1,6 @@
-from Evaluator import Evaluator
-from FeasibleSolutionSearcher import FeasibleSolutionSearcher
-from Neighborhood import Neighborhood
+from VNS.Evaluator import Evaluator
+from VNS.FeasibleSolutionSearcher import FeasibleSolutionSearcher
+from VNS.Neighborhood import Neighborhood
 import random
 
 class VNS:
@@ -15,14 +15,14 @@ class VNS:
         
     def search(self,N):
         k = 1
-        while (k <= N):
+        while k <= N:
             neighbors = self.neighborhood_func(self.current_solution,10)
             neighbor = random.choice(neighbors)
-            if (neighbor != None):
+            if neighbor is not None:
                 obj = self.evaluator.evaluate(neighbor)
             else:
                 obj = 0
-            if (self.objective_value >= obj):
+            if self.objective_value >= obj:
                 k += 1
             else:
                 self.objective_value,self.current_solution = obj,neighbor

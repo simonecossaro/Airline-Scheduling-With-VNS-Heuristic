@@ -2,7 +2,7 @@ import pandas as pd
 import random
 import networkx as nx
 import numpy as np
-import AirlineUtilities as aut
+import airline_utilities as aut
 
 flights = pd.read_csv('flight_schedules.csv').iloc[:, 1:]
 aircraft_types = flights['aircraft_type'].unique()
@@ -18,7 +18,7 @@ class Airline:
         self.index_nid_dict = aut.index_nid_dict_func(self.flights)
         self.flights_copies = self.get_flights_copies()
         self.P = self.getP()
-        self.itineraries, self.FI = self.getItineraries()
+        self.itineraries, self.FI = self.get_itineraries()
         self.IR = self.getIR()
         self.routes = self.getRoutes()
         self.F = self.flights.iloc[:, 0]
@@ -59,8 +59,6 @@ class Airline:
             y['sibt'] = pd.to_datetime(y['sibt']) - pd.Timedelta(10, 'm')
             total_flights.loc[len(total_flights)] = y
         total_flights = total_flights.reset_index().iloc[:, 1:]
-        nid_index_dict = dict()
-        index_nid_dict = dict()
         return total_flights, nf
 
     def get_flights_copies(self):
@@ -124,7 +122,7 @@ class Airline:
             flight = flights_direct[flights_direct['destination'] == i[1]].iloc[0, 0]
             flights_itineraries.append(list([flight]))
         for i in one_stop_itineraries:
-            flights_itineraries.append(self.find_flights_itinerary(i))
+            flights_itineraries.append(aut.find_flights_itinerary(self.flights,i))
         I = list()
         for i in itineraries:
             I.append(i)

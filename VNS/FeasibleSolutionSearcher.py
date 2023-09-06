@@ -6,7 +6,7 @@ import gurobipy as gb
 class FeasibleSolutionSearcher:
     def __init__(self, airline):
         self.airline = airline
-        self.routes_graph = self.createRoutesGraph()
+        self.routes_graph = self.create_routes_graph()
 
     def search(self):
         D = self.routes_graph
@@ -34,7 +34,7 @@ class FeasibleSolutionSearcher:
                 ip.addConstr(gb.quicksum(X[edge_index_dict[(a, v)]] for a in D.predecessors(v)) == 1)
         # (3)
         ip.addConstr(gb.quicksum(X[edge_index_dict[a]] for a in A0) <= len(D_edges))
-        f_sol = ip.optimize()
+        ip.optimize()
         D2 = nx.Graph()
         for i in range(len(X)):
             if X[i].x == 1:
@@ -53,7 +53,7 @@ class FeasibleSolutionSearcher:
                 A0.append(e)
         return A0
 
-    def createRoutesGraph(self):
+    def create_routes_graph(self):
         D = nx.DiGraph()
         for i in range(len(self.airline.routes)):
             for j in range(len(self.airline.routes[i]) - 1):

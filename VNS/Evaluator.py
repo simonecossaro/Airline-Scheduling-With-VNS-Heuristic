@@ -1,5 +1,5 @@
 import pandas as pd
-import AirlineUtilities as aut
+import airline_utilities as aut
 import gurobipy as gb
 import numpy as np
 
