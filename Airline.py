@@ -1,3 +1,14 @@
+import pandas as pd
+import random 
+import networkx as nx
+import numpy as np
+import AircraftUtilities as aut
+
+flights = pd.read_csv('flight_schedules.csv').iloc[:,1:]
+aircraft_types = flights['aircraft_type'].unique()
+aircraft_clusters = pd.read_csv('aircraftClustering.csv')
+cluster_seat = pd.read_csv('aircraftSeats.csv')
+
 class Airline:
     def __init__(self,name):
         self.name = name
@@ -8,7 +19,7 @@ class Airline:
         self.IR = self.getIR()
         self.routes = self.getRoutes()
         self.F = self.flights.iloc[:,0]
-        self.R = self.getR()
+        self.R, self.R3 = self.getR()
         self.IC = self.getIC()
         
         self.Fare = self.getFare()
@@ -51,6 +62,9 @@ class Airline:
             y['sibt']= pd.to_datetime(y['sibt']) - pd.Timedelta(10,'m')
             total_flights.loc[len(total_flights)] = y
         total_flights = total_flights.reset_index().iloc[:,1:]
+        for i in range(nf,len(total_flights)):
+            nid_index_dict[total_flights.iloc[i,0]] = i
+            index_nid_dict[i] = total_flights.iloc[i,0]
         return total_flights, nf, nid_index_dict, index_nid_dict
     
     def getFlightsCopies(self):
@@ -143,6 +157,13 @@ class Airline:
             if (len(i)==2):
                 IC.append(i)
         return IC
+    
+    def getICit(self):
+        IC_it = list()
+        for i in range(len(self.itineraries)):
+            if (len(self.itineraries[i])==3):
+                IC_it.append(i)
+        return IC_it
 
     def getFM(self):
         return self.flights[self.flights.mandatory == 1].iloc[:,0]
@@ -173,7 +194,7 @@ class Airline:
         return A
 
     def getR(self):
-        RA = list()
+        R2 = list()
         for r in self.routes:
             list1 = list()
             list1.append(list(r))
@@ -183,16 +204,21 @@ class Airline:
                     list2 = self.substitution_in_list(list2,f,p)
                     if (list2 != list(r)):
                         list1.append(list2)
-            RA.append(list1)          
+            R2.append(list1)          
         R = list()
         counter = 0
-        for i in range(len(RA)):
+        for i in range(len(R2)):
             list1 = list()
-            for j in range(len(RA[i])):
+            for j in range(len(R2[i])):
                 list1.append(counter)
-                counter +=1
+                counter+=1
             R.append(list1)
-        return R
+        R3 = list()
+        for i in range(len(R2)):
+            for j in range(len(R2[i])):
+                R3.append(R2[i][j])
+        return R,R3
+    
     
     def getFare(self):
         Fare = list()
@@ -215,8 +241,8 @@ class Airline:
 
     def getC(self):
         C = list()
-        for i in range(len(self.R)):
-            C.append(self.calc_route_cost(self.R[i]))
+        for i in range(len(self.R3)):
+            C.append(self.calc_route_cost(self.R3[i]))
         return C
 
     def getFT(self):
@@ -234,8 +260,8 @@ class Airline:
             list1 = list()
             for p in self.P[i]:
                 list2 = list()
-                for j in range(len(self.R)):
-                    if (p in self.R[j]):
+                for j in range(len(self.R3)):
+                    if (p in self.R3[j]):
                         list2.append(1)
                     else:
                         list2.append(0)
@@ -256,8 +282,8 @@ class Airline:
         Θ3 = list()
         for i in self.FI:
             list1 = list()
-            for j in range(len(self.R)):
-                if (all(flight in self.R[j] for flight in i)):
+            for j in range(len(self.R3)):
+                if (all(flight in self.R3[j] for flight in i)):
                     list1.append(1)
                 else:
                     list1.append(0)
@@ -306,10 +332,10 @@ class Airline:
 
     def get_dev(self):
         dev = list()
-        for r in range(len(self.R)):
+        for r in range(len(self.R3)):
             list1 = list()
             for f in range(len(self.F)):
-                if (self.P[f][0] in self.R[r]):
+                if (self.P[f][0] in self.R3[r]):
                     list1.append(random.randint(1,10))
                 else:
                     list1.append(0)
@@ -317,8 +343,9 @@ class Airline:
         return dev
 
     def getRoutes(self):
-        flights_nid = list(self.flights['nid'])
+        flights_nid = list(self.flights.iloc[:self.nf,:]['nid'])
         G = nx.Graph()
+        G.add_nodes_from(self.flights.iloc[:self.nf,:]['nid'])
         for i in range(self.nf):
             if (pd.notnull(self.flights.iloc[i,21]) and (self.flights.iloc[i,21] in flights_nid)):
                 G.add_edge(self.flights.iloc[i,21], self.flights.iloc[i,0])
@@ -329,15 +356,21 @@ class Airline:
 
     def getEPD(self):
         EPD = list()
-        for r in range(len(self.R)):
+        for r in range(len(self.R3)):
             list1 = list()
-            for f in range(len(self.R[r])):
+            for f in range(len(self.R3[r])):
                 delay_sum = 0
                 for d in range(f):
                     delay_sum += self.dev[r][f]
                 list1.append(delay_sum)
             EPD.append(list1)
         return EPD
+    
+    def getCap(self):
+        Cap = list()
+        for a in aircraft_types:
+            Cap.append(aut.get_number_seats(a))
+        return Cap
         
     def find_flights_itineraries(self,itinerary):
         flights1 = self.flights[self.flights['origin']== itinerary[0]]
@@ -350,7 +383,7 @@ class Airline:
     
     def fare_for_flight(self,flight_id):
         flight = self.flights[self.flights['nid']==flight_id].iloc[0,:]
-        return flight['gcdistance'] / 5
+        return flight['gcdistance'] / 10
     
     def fare_for_itinerary(self,itinerary):
         fare = 0
@@ -373,10 +406,10 @@ class Airline:
             return True
         return False  
 
-    def find_min_pax(self):
+    def find_min_pax(self,itinerary):
         minimum = np.Inf
-        for i in self.FI:
-            pax = self.flights[self.flights['nid']==i].iloc[0,18]
+        for i in itinerary:
+            pax = self.flights[self.flights.nid==i].iloc[0,18]
             if (pax < minimum ):
                 minimum = pax
         return minimum
@@ -399,7 +432,7 @@ class Airline:
         m = str(date)[10:12]
         return int(m)+int(h)*60
 
-    def existICbetween(f1,p1,f2,p2):
+    def existICbetween(self,f1,p1,f2,p2):
         for i in self.IC:
             if (((i[0] == f1)or(i[0]==p1)) and ((i[1] == f2)or(i[1] == p2))):
                 return True
