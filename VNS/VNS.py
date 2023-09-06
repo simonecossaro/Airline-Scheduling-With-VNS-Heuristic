@@ -1,6 +1,6 @@
-from VNS.Evaluator import Evaluator
-from VNS.FeasibleSolutionSearcher import FeasibleSolutionSearcher
-from VNS.Neighborhood import Neighborhood
+from Evaluator import Evaluator
+from FeasibleSolutionSearcher import FeasibleSolutionSearcher
+from Neighborhood import Neighborhood
 import random
 
 class VNS:

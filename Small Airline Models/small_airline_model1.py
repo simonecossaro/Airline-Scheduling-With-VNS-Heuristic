@@ -1,7 +1,8 @@
 import gurobipy as gb
 import warnings
-warnings.filterwarnings('ignore')
 from Airline import Airline
+warnings.filterwarnings('ignore')
+
 
 airline = Airline('WRC')
 
@@ -15,7 +16,7 @@ FI = airline.FI
 R = airline.R
 P = airline.P
 
-#PARAMETERS
+# PARAMETERS
 D = airline.getD()
 C = airline.getC()
 Cap = airline.getCap()
@@ -25,7 +26,7 @@ B = airline.B
 Θ2 = airline.getΘ2()
 γ = airline.getγ()
 
-#MODEL 1
+# MODEL 1
 model1 = gb.Model()
 model1.modelSense = gb.GRB.MAXIMIZE
 
@@ -64,27 +65,27 @@ for i in range(len(I)):
 for f in range(len(F)):
     model1.addConstr( gb.quicksum((Θ2[i][f]*H[i]) for i in range(len(I))) <=
                          gb.quicksum((Cap[a] * gb.quicksum((gb.quicksum((Θ1[f][p][R[a][r]]*X[a,r])for p in range(len(P[f]))))for r in range(len(R[a]))))for a in range(len(A)) ))
-#(11)
+# (11)
 for i in range(len(FI)):
     for fm in FI[i]:
         for fn in FI[i]:
-            if(Θ2[i][airlineA.nid_index_dict[fm]] == 1 and Θ2[i][airlineA.nid_index_dict[fn]] == 1):
+            if Θ2[i][airline.nid_index_dict[fm]] == 1 and Θ2[i][airline.nid_index_dict[fn]] == 1:
                 model1.addConstr( H[i] <= D[i]*gb.quicksum((gb.quicksum(γ[i][FI[i].index(fm)][pm][FI[i].index(fn)][pn]*W[airline.nid_index_dict[fm],pm,airline.nid_index_dict[fn],pn] for pn in range(len(P[airline.nid_index_dict[fn]])))for pm in range(len(P[airline.nid_index_dict[fm]]))) ))
-#(12)
+# (12)
 for i in range(len(I)):
     for fm in range(len(FI[i])):
         for fn in range(len(FI[i])):
             for pm in range(len(P[fm])):
                 for pn in range(len(P[fn])):
                     model1.addConstr( W[fm,pm,fn,pn] <= Y[fm,pm] )
-#(13)
+# (13)
 for i in range(len(I)):
     for fm in range(len(FI[i])):
         for fn in range(len(FI[i])):
             for pm in range(len(P[fm])):
                 for pn in range(len(P[fn])):
                     model1.addConstr( W[fm,pm,fn,pn] <= Y[fn,pn] )
-#(14)
+# (14)
 for i in range(len(I)):
     for fm in range(len(FI[i])):
         for fn in range(len(FI[i])):

@@ -1,13 +1,12 @@
 from Airline import Airline
 import gurobipy as gb
 import warnings
-
 warnings.filterwarnings('ignore')
 
 def dateCoding(date):
     d = 0
     day = str(date)[8:10]
-    if (day == '12'):
+    if day == '12':
         d = 1
     h = str(date)[11:13]
     m = str(date)[14:16]

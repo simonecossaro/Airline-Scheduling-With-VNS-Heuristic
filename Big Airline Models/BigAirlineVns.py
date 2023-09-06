@@ -1,6 +1,6 @@
 import time
-import Airline
-import VNS
+from Airline import Airline
+from VNS.VNS import VNS
 
 start = time.perf_counter()
 big_airline = Airline('EZY')
@@ -9,5 +9,5 @@ sol, obj_value = vns.search(10)
 end = time.perf_counter()
 print('Solution aircraft routing problem: ')
 print(sol)
-print('Revenue(objective function value): '+ str(obj_value))
-print('Task time: '+str(end-start)+ ' s')
+print('Revenue(objective function value): ' + str(obj_value))
+print('Task time: '+ str(end-start) + ' s')
