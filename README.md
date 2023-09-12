@@ -6,18 +6,18 @@ To analyze scalability, the models were first implemented for a small airline (<
 
 # Directories
 #B Big Airline Model
-## Medium Airline Model
-## Small Airline Model
-## Results
-## VNS
+#B Medium Airline Model
+#B Small Airline Model
+#B Results
+#B VNS
 
 
 # .py files
-## Airline
-## airline_utilities
+#B Airline
+#B airline_utilities
 
 # csv
-## flight_schedule
-## aircraft_clusters
-## aircraft_seats
+#B flight_schedule
+#B aircraft_clusters
+#B aircraft_seats
 
