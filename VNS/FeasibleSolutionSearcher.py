@@ -20,6 +20,7 @@ class FeasibleSolutionSearcher:
             index_edge_dict[counter] = e
             counter += 1
         A0 = self.createA0(D)
+        # integer problem for finding feasible solution
         ip = gb.Model()
         ip.Params.LogToConsole = 0
         X = ip.addVars([a for a in range(len(D.edges()))], vtype=gb.GRB.BINARY)

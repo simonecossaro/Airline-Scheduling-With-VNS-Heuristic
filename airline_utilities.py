@@ -80,9 +80,11 @@ def calc_route_cost(flights, route):
     nid_index_dict = nid_index_dict_func(flights)
     cost = 0
     for f in route:
-        cost += calc_flight_cost(flights.iloc[nid_index_dict[f], :])
+        if (f > 10000):
+            cost += calc_flight_cost(flights.iloc[nid_index_dict[f], :])
+        else:
+            cost += calc_flight_cost(flights.iloc[int((f - 1001) / 2), :])
     return cost
-
 
 def calc_flight_cost(flight):
     dep = flight['sobt']
@@ -123,6 +125,8 @@ def flight_to_direct_itinerary(flights, flight, airline_itineraries, itineraries
                 airline_itineraries[i][1] == flight_dest and (i in itineraries)):
             return i
 
+def get_cap_flight(flights, flight_nid):
+    return flights[flights.nid == flight_nid].iloc[0,17]
 
 def calc_max_fare_ij(itinerary, itineraries, fare, b):
     max_fare = 0
@@ -133,3 +137,21 @@ def calc_max_fare_ij(itinerary, itineraries, fare, b):
             max_fare = obj
             j_max = j
     return max_fare, j_max
+
+def dataframe_to_list_without_nan(dataframe):
+    output = list()
+    for i in range(len(dataframe)):
+        list1 = list()
+        for j in range(len(dataframe.iloc[0,:])):
+            if(pd.notnull(dataframe.iloc[i,j])):
+                list1.append(dataframe.iloc[i,j])
+            else:
+                break
+        output.append(list1)
+    return output
+
+def dataframe_to_list(dataframe):
+    output = list()
+    for i in range(len(dataframe)):
+        output.append(dataframe.iloc[i,0])
+    return output

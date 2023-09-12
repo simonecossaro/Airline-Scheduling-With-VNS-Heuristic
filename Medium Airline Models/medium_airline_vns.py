@@ -1,13 +1,16 @@
-import time
 from Airline import Airline
 from VNS.VNS import VNS
+import time
+import warnings
 
-start = time.perf_counter()
-medium_airline = Airline('ISS')
+warnings.filterwarnings('ignore')
+
+medium_airline = Airline('UAL')
 vns = VNS(medium_airline)
+start = time.perf_counter()
 sol, obj_value = vns.search(10)
 end = time.perf_counter()
 print('Solution aircraft routing problem: ')
 print(sol)
-print('Revenue(objective function value): ' + str(obj_value))
+print('Revenue(objective function value): ' + str("{:e}".format(obj_value)))
 print('Task time: ' + str(end - start) + ' s')

@@ -5,13 +5,12 @@ class Neighborhood:
     def __init__(self, flights):
         self.flights = flights
 
-    def neighborhood(self, P, M):
+    def neighborhood(self, P):
         neighbors = []
-        for i in range(M):
-            neighbors.append(self.cross(P))
-            neighbors.append(self.insert(P))
-            neighbors.append(self.swap(P))
-            neighbors.append(self.delete(P))
+        neighbors.append(self.cross(P))
+        neighbors.append(self.insert(P))
+        neighbors.append(self.swap(P))
+        neighbors.append(self.delete(P))
         return neighbors
 
     def cross(self, P):
