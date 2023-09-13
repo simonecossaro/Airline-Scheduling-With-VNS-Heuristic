@@ -8,11 +8,17 @@ Xu, Y., Wandelt, S., & Sun, X. (2021). Airline integrated robust scheduling with
 
 # Directories
 **Big Airline Model** 
+
 Implementation of model 1, model 2 and VNS-heuristic for a large airline.
-#### Medium Airline Model
+
+**Medium Airline Model**
+
 Implementation of model 1, model 2 and VNS-heuristic for a medium airline.
-##### Small Airline Model
+
+**Small Airline Model**
+
 Implementation of model 1, model 2 and VNS-heuristic for a small airline.
+
 **Results** 
 
 **VNS** 
