@@ -41,7 +41,7 @@ This class implements an airline. Its fields and functions concern the sets and 
 
 This file contains numerous useful functions for calculating parameters, not only for the airline class but also for other classes present in the repository.
 
-# csv
+# .csv files
 ### flight_schedule.csv
 
 This dataset contains data on one day's flights. Provides information regarding origin, destination, airline, departure and arrival time, aircraft and even more about each flight.
