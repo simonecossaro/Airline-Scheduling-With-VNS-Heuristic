@@ -67,7 +67,7 @@ EPD = airline.get_epd()
 M = 30
 # B[i][j] Recapture rate from itinerary i to itinerary j
 B = airline.B
-# de[f][r]v deviation from the STD of flight f in aircraft route r
+# dev[f][r] deviation from the STD of flight f in aircraft route r
 dev = airline.dev
 # Θ1[f][p][r]: 1 if flight f, copy p ∈ P is served in route r, and 0 otherwise
 Θ1 = airline.get_Θ1()
