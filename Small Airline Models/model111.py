@@ -1,9 +1,9 @@
 import pandas as pd
 
-thy_flights = pd.read_csv('Big Airline Models/THY_data/THY_flights.csv').iloc[:,1:]
+results = pd.read_csv('results.csv').iloc[:,1:]
 
-for i in range(len(thy_flights)):
-    num = thy_flights.iloc[i,24][3:]
-    thy_flights.iloc[i,24] = "THY" + str(num)
+sum = 0
+for i in range(len(results)):
+    sum += (1 - results.iloc[i,5]/results.iloc[i,4])
 
-thy_flights.to_csv("Big Airline Models/THY_data/THY_flights.csv")
+print(sum / len(results))

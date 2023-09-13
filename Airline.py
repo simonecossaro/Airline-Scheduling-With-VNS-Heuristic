@@ -85,6 +85,7 @@ class Airline:
                 flights_itineraries.append(aut.find_flights_itinerary(self.flights, i))
         return itineraries, flights_itineraries
 
+    # returns IR, the set of itineraries where passenger spilled from one itinerary can be redirected to
     def get_ir(self):
         IR = list()
         for i in range(len(self.itineraries)):
@@ -95,6 +96,7 @@ class Airline:
             IR.append(list1)
         return IR
 
+    # returns IC, the set of one-stop itineraries
     def get_ic(self):
         IC = list()
         for i in self.FI:
@@ -102,6 +104,7 @@ class Airline:
                 IC.append(i)
         return IC
 
+    # returns the set of indexes of one-stop itineraries
     def get_ic_it(self):
         IC_it = list()
         for i in range(len(self.FI)):
@@ -109,12 +112,15 @@ class Airline:
                 IC_it.append(i)
         return IC_it
 
+    # returns FM, the set of mandatory flights
     def get_fm(self):
         return self.flights[self.flights.mandatory == 1].iloc[:, 0]
 
+    # return FO, the set of optional flights
     def get_fo(self):
         return self.flights[self.flights.mandatory == 0].iloc[:, 0]
 
+    # returns FIO, the set of optional flights within itinerary
     def get_fio(self):
         FIO = list()
         for i in range(len(self.FI)):
@@ -125,6 +131,7 @@ class Airline:
             FIO.append(list1)
         return FIO
 
+    # returns A, the set of aircraft
     def get_a(self):
         A = list()
         s = ""
@@ -138,6 +145,7 @@ class Airline:
             A.append(self.name + s)
         return A
 
+    # returns the set of routes
     def get_r(self):
         R2 = list()
         for r in self.routes:
@@ -164,30 +172,35 @@ class Airline:
                 R3.append(R2[i][j])
         return R, R3
 
+    # returns Fare, the set of fare for itinerary
     def get_fare(self):
         Fare = list()
         for i in self.FI:
             Fare.append(aut.fare_for_itinerary(self.flights, i))
         return Fare
 
+    # returns D, the set of the demand forecast for passenger itinerary
     def get_d(self):
         D = list()
         for i in range(len(self.FI)):
             D.append(aut.find_min_pax(self.flights, self.FI[i]))
         return D
 
+    # returns DI, the maximum number of passengers carried in itinerary
     def get_di(self):
         DI = list()
         for i in range(len(self.FI)):
             DI.append(aut.find_min_cap(self.flights, self.FI[i]))
         return DI
 
+    # returns C, the set of operation and delay penalty cost of executing aircraft route
     def get_c(self):
         C = list()
         for i in range(len(self.R3)):
             C.append(aut.calc_route_cost(self.flights, self.R3[i]))
         return C
 
+    # return FT, the set of the block time of flights
     def get_ft(self):
         FT = list()
         for i in range(len(self.F)):
@@ -197,6 +210,7 @@ class Airline:
             FT.append(aut.calc_minutes(time))
         return FT
 
+    # returns the set Θ1, Θ1[f][p][r]: 1 if flight f, copy p ∈ P is served in route r, and 0 otherwise
     def get_Θ1(self):
         Θ1 = list()
         for i in range(len(self.flights)):
@@ -212,6 +226,7 @@ class Airline:
             Θ1.append(list1)
         return Θ1
 
+    # returns the set Θ2, Θ2[i][f]: 1 if itinerary i involves flight f, and 0 otherwise
     def get_Θ2(self):
         Θ2 = list()
         for i in self.FI:
@@ -221,6 +236,7 @@ class Airline:
             Θ2.append(list1)
         return Θ2
 
+    # return the set Θ3, Θ3[r][i]: 1 if the component flights of connecting itinerary i are executed by the same aircraft in route r, and 0 otherwise
     def get_Θ3(self):
         Θ3 = list()
         for i in self.FI:
@@ -233,6 +249,7 @@ class Airline:
             Θ3.append(list1)
         return Θ3
 
+    # returns the set γ, γ[i][f1][p1][f2][p2]: 1 if itinerary i∈IC exists between flight f1, copy p1 and flight f2, copy p2
     def get_γ(self):
         γ = list()
         for i in self.FI:
@@ -255,6 +272,7 @@ class Airline:
             γ.append(list1)
         return γ
 
+    # returns B, B[i][j] is the recapture rate from itinerary i to itinerary j
     def get_b(self):
         B = list()
         for i in range(len(self.itineraries)):
@@ -275,6 +293,7 @@ class Airline:
             B.append(list1)
         return B
 
+    # returns dev[f][r] deviation from the STD of flight f in aircraft route r
     def get_dev(self):
         dev = list()
         for r in range(len(self.R3)):
@@ -287,6 +306,7 @@ class Airline:
             dev.append(list1)
         return dev
 
+    # returns routes
     def get_routes(self):
         flights_nid = list(self.flights['nid'])
         G = nx.Graph()
@@ -299,6 +319,7 @@ class Airline:
             aircraft_routes.append(list(i))
         return aircraft_routes
 
+    # returns EPD, EPD[r][f] the expected propagated delays of flight f in route r
     def get_epd(self):
         EPD = list()
         for r in range(len(self.R3)):
@@ -311,6 +332,7 @@ class Airline:
             EPD.append(list1)
         return EPD
 
+    # returns Cap, Cap[a]: the number of seats (capacity) in aircraft a
     def get_cap(self):
         Cap = list()
         for a in range(len(self.R)):
