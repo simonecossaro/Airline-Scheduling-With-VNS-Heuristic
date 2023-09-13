@@ -12,7 +12,7 @@ Xu, Y., Wandelt, S., & Sun, X. (2021). [Airline integrated robust scheduling wit
 
 **Big Airline Model** 
 
-Implementation of model 1, model 2 and VNS-heuristic for a large airline.
+Implementation of model 1, model 2 and VNS-heuristic for an airline of big size.
 
 **Medium Airline Model**
 
@@ -24,16 +24,27 @@ Implementation of model 1, model 2 and VNS-heuristic for a small airline.
 
 **Results** 
 
+The results obtained from model implementations of various airlines.  
+
 **VNS** 
 
 
 # .py files
+
 **Airline**
+
+This class implements an airline. Its fields and functions concern the sets and parameters useful for model implementations. 
 
 **airline_utilities**
 
+This file contains numerous useful functions for calculating parameters, not only for the airline class but also for other classes present in the repository.
+
 # csv
-#B flight_schedule
-#B aircraft_clusters
-#B aircraft_seats
+**flight_schedule**
+
+This dataset contains data on one day's flights. Provides information regarding origin, destination, airline, departure and arrival time, aircraft and even more about each flight.
+
+**aircraft_clusters**
+
+**aircraft_seats**
 
