@@ -31,20 +31,24 @@ The results obtained from model implementations of various airlines.
 
 # .py files
 
-**Airline**
+**Airline.py**
 
 This class implements an airline. Its fields and functions concern the sets and parameters useful for model implementations. 
 
-**airline_utilities**
+**airline_utilities.py**
 
 This file contains numerous useful functions for calculating parameters, not only for the airline class but also for other classes present in the repository.
 
 # csv
-**flight_schedule**
+**flight_schedule.csv**
 
 This dataset contains data on one day's flights. Provides information regarding origin, destination, airline, departure and arrival time, aircraft and even more about each flight.
 
-**aircraft_clusters**
+**aircraftClustering.csv**
 
-**aircraft_seats**
+This dataset provides information regarding the cluster to which each aircraft belongs.
+
+**aircraftSeats.csv**
+
+This dataset provides information about the number of seats on each aircraft.
 
