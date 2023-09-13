@@ -14,7 +14,7 @@ The code used is Python and Gurobi is the mathematical optimization software lib
 # Directories
 ### VNS
 
-See the internal README.md file in the implementation of [](VNS)
+See the internal README.md file of the [https://github.com/simonecossaro/Airline-Scheduling-With-VNS-Heuristic/tree/main/VNS](VNS) directory.
 
 ### Big Airline Models
 
