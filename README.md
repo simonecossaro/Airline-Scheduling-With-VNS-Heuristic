@@ -12,49 +12,45 @@ Xu, Y., Wandelt, S., & Sun, X. (2021). [Airline integrated robust scheduling wit
 The code used is Python and Gurobi is the mathematical optimization software library chosen for the implementation of the models.
 
 # Directories
-
-## VNS
+### VNS
 
 See the internal README.md file in the implementation of [](VNS)
 
-**Big Airline Models** 
+### Big Airline Models
 
 Implementation of model 1, model 2 and VNS-heuristic for an airline of big size.
 
-**Medium Airline Models**
+### Medium Airline Models
 
 Implementation of model 1, model 2 and VNS-heuristic for a medium airline.
 
-**Small Airline Models**
+### Small Airline Models
 
 Implementation of model 1, model 2 and VNS-heuristic for a small airline.
 
-**Results** 
+### Results
 
 The results obtained from model implementations for various airlines.  
- 
-
 
 # .py files
-
-**Airline.py**
+### Airline.py
 
 This class implements an airline. Its fields and functions concern the sets and parameters useful for model implementations. 
 
-**airline_utilities.py**
+### airline_utilities.py
 
 This file contains numerous useful functions for calculating parameters, not only for the airline class but also for other classes present in the repository.
 
 # csv
-**flight_schedule.csv**
+### flight_schedule.csv
 
 This dataset contains data on one day's flights. Provides information regarding origin, destination, airline, departure and arrival time, aircraft and even more about each flight.
 
-**aircraftClustering.csv**
+### aircraftClustering.csv
 
 This dataset provides information regarding the cluster to which each aircraft belongs.
 
-**aircraftSeats.csv**
+### aircraftSeats.csv
 
 This dataset provides information about the number of seats on each aircraft.
 
