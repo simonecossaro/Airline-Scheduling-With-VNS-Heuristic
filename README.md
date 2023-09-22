@@ -12,7 +12,7 @@ Xu, Y., Wandelt, S., & Sun, X. (2021). [Airline integrated robust scheduling wit
 The code used is Python and Gurobi is the mathematical optimization software library chosen for the implementation of the models.
 
 # Directories
-#### VNS
+### VNS
 
 See the internal README.md file of the [VNS](https://github.com/simonecossaro/Airline-Scheduling-With-VNS-Heuristic/tree/main/VNS) directory.
 
