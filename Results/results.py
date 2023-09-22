@@ -17,18 +17,22 @@ def dateCoding(date):
 
 airlines_name = ["NVR","CRL","RSY","CSN","KAR","ASL","DAL","UAL"]
 df_results = pd.DataFrame(columns=["airline", "total_flights", "model1", "model1_linear", "model2", "vns","gap"])
+df_time = pd.DataFrame(columns=["airline", "total_flights", "model1", "model1_linear", "model2", "vns"])
 results = list()
 
 for airline_name in airlines_name:
-    list1 = list()
-    list1.append(airline_name)
+    res_list = list()
+    time_list = list()
+    res_list.append(airline_name)
+    time_list.append(airline_name)
     airline = Airline(airline_name)
     # SETS
     # I set of passenger itineraries
     I = airline.itineraries
     # F set of flights
     F = airline.F
-    list1.append(len(F))
+    res_list.append(len(F))
+    time_list.append(len(F))
     # A set of aircraft
     A = airline.get_a()
     # IC set of one-stop itineraries, IC_it set of indexes of one-stop itineraries
@@ -88,6 +92,7 @@ for airline_name in airlines_name:
     γ = airline.get_γ()
 
     # MODEL 1
+    start = time.perf_counter()
     model1 = gb.Model()
     model1.modelSense = gb.GRB.MAXIMIZE
 
@@ -137,10 +142,13 @@ for airline_name in airlines_name:
                         (gb.quicksum(Y[fm, pm] * Y[fn, pn] for pn in range(len(P[fn])))) for pm in range(len(P[fm]))))
 
     model1.optimize()
+    end = time.perf_counter()
     obj_value1 = model1.getObjective().getValue()
-    list1.append(str("{:e}".format(obj_value1)))
+    res_list.append(str("{:e}".format(obj_value1)))
+    time_list.append(end-start)
 
     # MODEL 1
+    start = time.perf_counter()
     model1 = gb.Model()
     model1.modelSense = gb.GRB.MAXIMIZE
 
@@ -215,10 +223,13 @@ for airline_name in airlines_name:
                         model1.addConstr(W[fm, pm, fn, pn] >= Y[fm, pm] + Y[fn, pn] - 1)
 
     model1.optimize()
+    end = time.perf_counter()
     obj_value2 = model1.getObjective().getValue()
-    list1.append(str("{:e}".format(obj_value2)))
+    res_list.append(str("{:e}".format(obj_value2)))
+    time_list.append(end-start)
 
     # MODEL 2
+    start = time.perf_counter()
     model2 = gb.Model()
     model2.modelSense = gb.GRB.MAXIMIZE
 
@@ -302,18 +313,23 @@ for airline_name in airlines_name:
             model2.addConstr(T[i, j] <= D[i])
 
     model2.optimize()
+    end = time.perf_counter()
     obj_value3 = model2.getObjective().getValue()
-    list1.append(str("{:e}".format(obj_value3)))
+    res_list.append(str("{:e}".format(obj_value3)))
+    time_list.append(end-start)
 
     vns = VNS(airline)
     start = time.perf_counter()
     sol, obj_value4 = vns.search(10)
     end = time.perf_counter()
-    list1.append(str("{:e}".format(obj_value4)))
+    res_list.append(str("{:e}".format(obj_value4)))
+    time_list.append(end-start)
 
     gap = 1 - obj_value4/obj_value3
-    list1.append(gap)
+    res_list.append(gap)
 
-    df_results.loc[len(df_results)] = list1
+    df_results.loc[len(df_results)] = res_list
+    df_time.loc[len(df_time)] = time_list
 
-df_results.to_csv('results.csv')
+df_results.to_csv('Results/results.csv')
+df_time.to_csv('Results/times.csv')
