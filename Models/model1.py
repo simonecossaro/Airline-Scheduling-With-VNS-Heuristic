@@ -1,5 +1,6 @@
 import gurobipy as gb
 import warnings
+import time
 from Airline import Airline
 warnings.filterwarnings('ignore')
 
@@ -97,4 +98,5 @@ for a in range(len(A)):
             routes_solution.append(R3[R[a][r]])
 print('Routes solution:')
 print(routes_solution)
+
 

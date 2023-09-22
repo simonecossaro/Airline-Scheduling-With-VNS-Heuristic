@@ -1,6 +1,5 @@
 import gurobipy as gb
 import warnings
-import time
 from Airline import Airline
 warnings.filterwarnings('ignore')
 
@@ -43,7 +42,6 @@ Fare = airline.Fare
 γ = airline.get_γ()
 
 # MODEL 1
-start = time.perf_counter()
 model1 = gb.Model()
 model1.modelSense = gb.GRB.MAXIMIZE
 
@@ -112,7 +110,7 @@ for i in IC_it:
 
 
 model1.optimize()
-end = time.perf_counter()
+
 routes_solution = list()
 for a in range(len(A)):
     for r in range(len(R[a])):
@@ -120,7 +118,6 @@ for a in range(len(A)):
             routes_solution.append(R3[R[a][r]])
 print('Routes solution:')
 print(routes_solution)
-print('Time: '+str(end-start))
 
 
 
