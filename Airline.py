@@ -22,6 +22,7 @@ class Airline:
         self.IC = self.get_ic()
         self.Fare = self.get_fare()
         self.B = self.get_b()
+        self.D = self.get_d()
         self.DI = self.get_di()
         self.dev = self.get_dev()
 
@@ -171,6 +172,20 @@ class Airline:
             for j in range(len(R2[i])):
                 R3.append(R2[i][j])
         return R, R3
+
+    def get_aircrafts_routes(self):
+        R2 = list()
+        for r in self.routes:
+            list1 = list()
+            list1.append(list(r))
+            for f in r:
+                for p in self.P[self.nid_index_dict[f]]:
+                    list2 = list(r)
+                    list2 = aut.substitution_in_list(list2, f, p)
+                    if list2 != list(r):
+                        list1.append(list2)
+            R2.append(list1)
+
 
     # returns Fare, the set of fare for itinerary
     def get_fare(self):

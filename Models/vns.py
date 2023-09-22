@@ -5,8 +5,8 @@ import warnings
 
 warnings.filterwarnings('ignore')
 
-small_airline = Airline('CSN')
-vns = VNS(small_airline)
+airline = Airline('CRL')
+vns = VNS(airline)
 start = time.perf_counter()
 sol, obj_value = vns.search(10)
 end = time.perf_counter()

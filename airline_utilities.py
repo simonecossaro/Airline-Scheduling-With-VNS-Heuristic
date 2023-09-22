@@ -126,7 +126,8 @@ def flight_to_direct_itinerary(flights, flight, airline_itineraries, itineraries
             return i
 
 def get_cap_flight(flights, flight_nid):
-    return flights[flights.nid == flight_nid].iloc[0,17]
+    return get_number_seats(flights[flights.nid == flight_nid].iloc[0,13])
+    #return flights[flights.nid == flight_nid].iloc[0,17]
 
 def calc_max_fare_ij(itinerary, itineraries, fare, b):
     max_fare = 0

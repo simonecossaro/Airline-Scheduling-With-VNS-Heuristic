@@ -15,15 +15,14 @@ def dateCoding(date):
     return d * 1440 + int(h) * 60 + int(m)
 
 
-small_airlines = ["RSY", "CSN", "KGL", "HAY", "AIC", "KAL", "WRC", "ASL", "AUI", "DAL", "UAL"]
-df_results = pd.DataFrame(columns=["airline", "total_flights", "model1", "model1_linear", "model2", "vns"])
+airlines_name = ["NVR","CRL","RSY","CSN","KAR","ASL","DAL","UAL"]
+df_results = pd.DataFrame(columns=["airline", "total_flights", "model1", "model1_linear", "model2", "vns","gap"])
 results = list()
 
-for small_airline in small_airlines:
+for airline_name in airlines_name:
     list1 = list()
-    list1.append(small_airline)
-    print(small_airline)
-    airline = Airline(small_airline)
+    list1.append(airline_name)
+    airline = Airline(airline_name)
     # SETS
     # I set of passenger itineraries
     I = airline.itineraries
@@ -312,7 +311,9 @@ for small_airline in small_airlines:
     end = time.perf_counter()
     list1.append(str("{:e}".format(obj_value4)))
 
+    gap = 1 - obj_value4/obj_value3
+    list1.append(gap)
+
     df_results.loc[len(df_results)] = list1
 
-print(df_results)
 df_results.to_csv('results.csv')

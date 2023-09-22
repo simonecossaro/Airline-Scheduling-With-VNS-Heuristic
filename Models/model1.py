@@ -3,7 +3,7 @@ import warnings
 from Airline import Airline
 warnings.filterwarnings('ignore')
 
-airline = Airline('CSN')
+airline = Airline('CRL')
 
 # SETS
 # I set of passenger itineraries
