@@ -14,7 +14,7 @@ def dateCoding(date):
     return d * 1440 + int(h) * 60 + int(m)
 
 
-airline = Airline('CRL')
+airline = Airline('NVR')
 # SETS
 # I set of passenger itineraries
 I = airline.itineraries

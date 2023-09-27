@@ -43,6 +43,9 @@ class FeasibleSolutionSearcher:
         feasible_solution = list()
         for i in nx.connected_components(D2):
             feasible_solution.append(list(i))
+        #for n in D.nodes():
+        #    if D.degree(n) == 0:
+        #        feasible_solution.append((list([n])))
         return feasible_solution
 
     def createA0(self, D):
@@ -56,6 +59,9 @@ class FeasibleSolutionSearcher:
 
     def create_routes_graph(self):
         D = nx.DiGraph()
+        for i in range(len(self.airline.routes)):
+            for j in range(len(self.airline.routes[i])):
+                D.add_node(self.airline.routes[i][j])
         for i in range(len(self.airline.routes)):
             for j in range(len(self.airline.routes[i]) - 1):
                 D.add_edge(self.airline.routes[i][j], self.airline.routes[i][j + 1])

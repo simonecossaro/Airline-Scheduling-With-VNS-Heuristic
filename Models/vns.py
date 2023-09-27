@@ -5,7 +5,7 @@ import warnings
 
 warnings.filterwarnings('ignore')
 
-airline = Airline('CRL')
+airline = Airline('NVR')
 vns = VNS(airline)
 start = time.perf_counter()
 sol, obj_value = vns.search(10)

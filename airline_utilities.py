@@ -80,10 +80,10 @@ def calc_route_cost(flights, route):
     nid_index_dict = nid_index_dict_func(flights)
     cost = 0
     for f in route:
-        if (f > 10000):
+        if (f > 33000):
             cost += calc_flight_cost(flights.iloc[nid_index_dict[f], :])
         else:
-            cost += calc_flight_cost(flights.iloc[int((f - 1001) / 2), :])
+            cost += calc_flight_cost(flights.iloc[int((f - 10001) / 2), :])
     return cost
 
 def calc_flight_cost(flight):
@@ -127,7 +127,6 @@ def flight_to_direct_itinerary(flights, flight, airline_itineraries, itineraries
 
 def get_cap_flight(flights, flight_nid):
     return get_number_seats(flights[flights.nid == flight_nid].iloc[0,13])
-    #return flights[flights.nid == flight_nid].iloc[0,17]
 
 def calc_max_fare_ij(itinerary, itineraries, fare, b):
     max_fare = 0

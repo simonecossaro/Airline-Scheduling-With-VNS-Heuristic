@@ -1,6 +1,7 @@
 from Airline import Airline
 from VNS.VNS import VNS
 import time
+import zlib
 import pandas as pd
 import gurobi as gb
 
@@ -14,8 +15,7 @@ def dateCoding(date):
     m = str(date)[14:16]
     return d * 1440 + int(h) * 60 + int(m)
 
-
-airlines_name = ["NVR","CRL","RSY","CSN","KAR","ASL","DAL","UAL"]
+airlines_name = ["NVR","RSY","ANA","KAL","ASL","DAL","UAL"]
 df_results = pd.DataFrame(columns=["airline", "total_flights", "model1", "model1_linear", "model2", "vns","gap"])
 df_time = pd.DataFrame(columns=["airline", "total_flights", "model1", "model1_linear", "model2", "vns"])
 results = list()
@@ -146,6 +146,12 @@ for airline_name in airlines_name:
     obj_value1 = model1.getObjective().getValue()
     res_list.append(str("{:e}".format(obj_value1)))
     time_list.append(end-start)
+
+    routes_solution1 = list()
+    for a in range(len(A)):
+        for r in range(len(R[a])):
+            if X[a, r].x == 1:
+                routes_solution1.append(R3[R[a][r]])
 
     # MODEL 1
     start = time.perf_counter()
@@ -333,3 +339,4 @@ for airline_name in airlines_name:
 
 df_results.to_csv('Results/results.csv')
 df_time.to_csv('Results/times.csv')
+

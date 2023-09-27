@@ -40,7 +40,7 @@ class Airline:
 
     def get_flights_copies(self):
         flights_copies = list()
-        counter = 1001
+        counter = 10001
         for i in range(len(self.flights)):
             list1 = list()
             list1.append(self.flights.iloc[i, 0])
