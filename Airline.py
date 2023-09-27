@@ -39,17 +39,19 @@ class Airline:
         return airline_flights
 
     def get_flights_copies(self):
-        flights_copies = list()
-        counter = 10001
+        flights_copies_nid = list()
+        nid_counter = 10001
         for i in range(len(self.flights)):
             list1 = list()
             list1.append(self.flights.iloc[i, 0])
-            list1.append(counter)
-            counter += 1
-            list1.append(counter)
-            counter += 1
-            flights_copies.append(list1)
-        return flights_copies
+            # + 10 min
+            list1.append(nid_counter)
+            nid_counter += 1
+            # - 10 min
+            list1.append(nid_counter)
+            nid_counter += 1
+            flights_copies_nid.append(list1)
+        return flights_copies_nid
 
     def get_itineraries(self):
         G = nx.MultiDiGraph()
