@@ -52,7 +52,6 @@ class Evaluator:
         for f in flights_selected:
             cap.append(aut.get_cap_flight(self.airline.flights,f))
         remain = cap
-        print('step1')
         # step1
         for i in range(len(onestop_it_ord)):
             f1 = self.airline.FI[itineraries_selected[int(onestop_it_ord.iloc[i, 0])]][0]
@@ -62,7 +61,6 @@ class Evaluator:
             H[int(onestop_it_ord.iloc[i, 0])] = flow
             remain[flight_index_ev_dict[f1]] -= flow
             remain[flight_index_ev_dict[f2]] -= flow
-        print('step2')
         # step2
         for i in range(len(direct_it_ord)):
             f = self.airline.FI[itineraries_selected[int(direct_it_ord.iloc[i, 0])]][0]
