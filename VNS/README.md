@@ -7,9 +7,9 @@ First of all let's define the following term. A flight route solution p = {fi,..
 
 ## Neighborhood
 
-Class that implements a neighborhood. There four types of neighborhood structures to generate flight route solution pairs: cross, insert, swap, and delete. These neighborhoods provide effective probing to new solutions with varying search depth. We introduce several notations first:
-* dep(f): Departure airport of flight f
-* arr(f): Arrival airport of flight f
+Class that implements a neighborhood. There are four types of neighborhood structures to generate flight route solution pairs: cross, insert, swap, and delete. These neighborhoods provide effective probing to new solutions with varying search depth. We introduce several notations first:
+* dep(f): departure airport of flight f
+* arr(f): arrival airport of flight f
 * con(fi, fj): fi can be connected to fj
 
 ## FeasibleSolutionSearcher
