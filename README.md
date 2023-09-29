@@ -4,13 +4,13 @@ The integration of aircraft routing and fleet assignment subproblems enables a m
 
 Due to the high computational complexity induced by the large number of variables and constraints, traditional decomposition methods do not scale up well to instances of large size (over 900 flights). A VNS-based heuristic is capable of deriving fast and efficient solutions to overcome this issue.
 
-To analyze scalability, the models were first implemented for small airlines (<20 flights per day), then for medium-sized (around 150 flights) and finally for a large one (>1000 flights).
-
 This repository aims to implement the models presented in the following paper:
 
 Xu, Y., Wandelt, S., & Sun, X. (2021). [Airline integrated robust scheduling with a variable neighborhood search based heuristic](https://www.sciencedirect.com/user/identity/landing?code=GuXkMOVgQi6PaRovtDYzYvzioxxSFR2ayyUw9c29&state=retryCounter%3D0%26csrfToken%3D654f3f82-73d7-42ff-b68e-ae8babbc031a%26idpPolicy%3Durn%253Acom%253Aelsevier%253Aidp%253Apolicy%253Aproduct%253Ainst_assoc%26returnUrl%3D%252Fscience%252Farticle%252Fpii%252FS0191261521000850%253Fvia%25253Dihub%26prompt%3Dlogin%26cid%3Darp-9294e37e-4dba-4b2e-ab45-8391d6afa5b4). Transportation Research Part B: Methodological, 149, 181-203
 
 The code used is Python and Gurobi is the mathematical optimization software library chosen for the implementation of the models.
+
+To analyze scalability, the models were first implemented for small airlines (<20 flights per day), then for medium-sized (around 150 flights) and finally for a large one (>1000 flights).
 
 # Directories
 ### VNS
