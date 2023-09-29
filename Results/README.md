@@ -7,6 +7,6 @@ Results obtained from results.py .
 ## times.csv
 Computation times measured in results.py .
 ## results_plot.png
-Plot obtained from plots.py . Compare the results (revenue) obtained using the model and using the VNS. 
+Plot obtained from plots.py . Compares the results (revenue) obtained using the model and using the VNS. 
 ## time_plot.png
-Plot obtained from plots.py . Compare the computational times measured using the model and using the VNS. 
+Plot obtained from plots.py . Compares the computational times measured using the model and using the VNS. 
